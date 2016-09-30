@@ -1,0 +1,12 @@
+{
+  "name": "unexpected-presentation",
+  "version": "1.0.0",
+  "description": "Create HTML presentation using unexpected-markdown",
+  "main": "index.js",
+  "keywords": [
+    "presentation",
+    "unexpected"
+  ],
+  "author": "Sune Simonsen",
+  "license": "MIT"
+}
