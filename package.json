@@ -8,5 +8,13 @@
     "unexpected"
   ],
   "author": "Sune Simonsen",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "async": "2.0.1",
+    "html": "1.0.0",
+    "ncp": "2.0.0",
+    "normalize.css": "5.0.0",
+    "rmdir": "1.2.0",
+    "unexpected-markdown": "1.7.1"
+  }
 }

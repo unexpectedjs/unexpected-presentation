@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <title>Presentation</title>
+    <meta charset="utf-8">
+    <link href="./static/normalize.css" rel="stylesheet" type="text/css">
+    <link href="./static/base.css" rel="stylesheet" type="text/css">
+  </head>
+  
+  <body>
+    <section class="section" id="section-0">
+      <section class="slide" id="slide-0-0">
+        <h2 id="unexpected">Unexpected</h2>
+
+        
+<h4 id="the-extensible-assertion-library">The extensible assertion library</h4>
+
+        <aside class="notes">What is Unexpected? Unexpected is an assertion library like Chai, expect.js
+          or should.js. But is also very different as you will see during the presentation.</aside>
+      </section>
+      <section class="slide" id="slide-0-1">
+        <p>Started in 2013 as an experiment.</p>
+        <aside class="notes">Unexpected started at One.com. At the time we were using expect.js. A
+          former colleague of mine, Morten Siebuhr, tried to use expect.js for a
+          test suite with several thousands assertions and concluded that is was
+          way too slow. I tried to investigate what was going on, and found out that
+          each <code>expect</code> would create 84 assertion instances. I though I
+          could do a better job. That was the start of Unexpected.</aside>
+      </section>
+      <section class="slide" id="slide-0-2">
+        <p>Used by One.com from v1.0.4
+          <br>and is used for all JavaScript testing now.</p>
+        <aside class="notes">Andreas Lind known for AssetGraph, quickly endorsed the project and started
+          contributing, if it wasn&#39;t for him the project would never have left
+          the ground. Today it is a split effort between Andreas and me.</aside>
+      </section>
+      <section class="slide" id="slide-0-3">
+        <p>Unexpected is starting to be used by other companies.</p>
+      </section>
+      <section class="slide" id="slide-0-4">
+        <p>A small but very active and helpful community.</p>
+        <p>Find <a href="https://gitter.im/unexpectedjs/unexpected">Gitter</a> and
+          <a
+          href="https://github.com/unexpectedjs/unexpected">Github</a>links on
+<a href="http://unexpected.js.org">http://unexpected.js.org</a>.</p>
+        <aside
+        class="notes">Daily activity, get your questions answered immediately.</aside>
+      </section>
+      <section class="slide" id="slide-0-5">
+        <p>We have great documentation!</p>
+        <p><a href="http://unexpected.js.org">http://unexpected.js.org</a>
+        </p>
+      </section>
+      <section class="slide" id="slide-0-6">
+        <p>Many plugins that cover most functionality.</p>
+      </section>
+    </section>
+    <section class="section" id="section-1">
+      <section class="slide" id="slide-1-0">
+        
+<h2 id="syntax-matters">Syntax matters</h2>
+
+        <p><small>
+programs_should_be_written_for_people_to_read_and_only_incidentally_for_machines_to_execute<br>
+programs.should.be.written.for.people.to.read.and.only.incidentally.for.machines.to.execute<br>
+programsShouldBeWrittenForPeopleToReadAndOnlyIncidentallyForMachinesToExecute<br>
+Programs should be written for people to read, and only incidentally for machines to execute. 
+</small>
+        </p>
+        <p>— Abelson and Sussman</p>
+        <aside class="notes">let&#39;s just get the syntax out of the way before we are get started.</aside>
+      </section>
+      <section class="slide" id="slide-1-1">
+        <p>Assertions are just text - feel free to express yourself.</p>
+        <div class="code lang-javascript">
+          <div><span style="color: #000000">expect</span><span style="color: #000000">(</span>obj
+            <span
+            style="color: #000000">,</span>&nbsp;<span style="color: #df5000">'to&nbsp;have&nbsp;keys'</span>
+              <span
+              style="color: #000000">,</span>&nbsp;<span style="color: #df5000">'foo'</span><span style="color: #000000">,</span>&nbsp;
+                <span
+                style="color: #df5000">'bar'</span><span style="color: #000000">);</span>
+          </div>
+        </div>
+      </section>
+      <section class="slide" id="slide-1-2">
+        <p>Especially important when you are doing complicated stuff:</p>
+        <div class="code lang-javascript">
+          <div><span style="color: #a71d5d">return</span>&nbsp;<span style="color: #000000">expect</span>
+            <span
+            style="color: #000000">(</span>
+          </div>
+          <div>&nbsp;&nbsp;fs<span style="color: #000000">.</span><span style="color: #000000">createReadStream</span>
+            <span
+            style="color: #000000">(</span><span style="color: #df5000">'suboptimal.png'</span><span style="color: #000000">),</span>
+          </div>
+          <div>&nbsp;&nbsp;<span style="color: #df5000">'when&nbsp;piped&nbsp;through'</span>
+            <span
+            style="color: #000000">,</span>
+          </div>
+          <div>&nbsp;&nbsp;<span style="color: #a71d5d">new</span>&nbsp;OptiPng
+            <span
+            style="color: #000000">([</span><span style="color: #df5000">'-o7'</span><span style="color: #000000">]),</span>
+          </div>
+          <div>&nbsp;&nbsp;<span style="color: #df5000">'to&nbsp;yield&nbsp;output&nbsp;satisfying'</span>
+            <span
+            style="color: #000000">,</span>&nbsp;<span style="color: #a71d5d">function</span>&nbsp;
+              <span
+              style="color: #000000">(</span>optiPngBuffer<span style="color: #000000">)</span>&nbsp;
+                <span
+                style="color: #000000">{</span>
+          </div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #000000">expect</span>
+            <span
+            style="color: #000000">(</span>optiPngBuffer<span style="color: #000000">.</span>length
+              <span
+              style="color: #000000">,</span>&nbsp;<span style="color: #df5000">'to&nbsp;be&nbsp;within'</span>
+                <span
+                style="color: #000000">,</span>&nbsp;<span style="color: #0086b3">0</span><span style="color: #000000">,</span>&nbsp;
+                  <span
+                  style="color: #0086b3">152</span><span style="color: #000000">);</span>
+          </div>
+          <div>&nbsp;&nbsp;<span style="color: #000000">}</span>
+          </div>
+          <div><span style="color: #000000">);</span>
+          </div>
+        </div>
+      </section>
+      <section class="slide" id="slide-1-3">
+        <p>A nice side-effect of using strings:</p>
+        <div class="code lang-javascript">
+          <div><span style="color: #000000">expect</span><span style="color: #000000">(</span>
+            <span
+            style="color: #0086b3">42</span><span style="color: #000000">,</span>&nbsp;<span style="color: #df5000">'to&nbsp;not&nbsp;be'</span>
+              <span
+              style="color: #000000">,</span>&nbsp;<span style="color: #0086b3">24</span><span style="color: #000000">);</span>
+          </div>
+        </div>
+        <div class="output">
+          <div><span style="color: red; font-weight: bold">Unknown&nbsp;assertion&nbsp;'</span>
+            <span
+            style="color: #df5000">to&nbsp;not&nbsp;be</span><span style="color: red; font-weight: bold">',&nbsp;did&nbsp;you&nbsp;mean:&nbsp;'</span>
+              <span
+              style="color: #df5000">not&nbsp;to&nbsp;be</span><span style="color: red; font-weight: bold">'</span>
+          </div>
+        </div>
+      </section>
+    </section>
+    <section class="section" id="section-2">
+      <section class="slide" id="slide-2-0">
+        
+<h2 id="context-is-important">Context is important</h2>
+
+        <aside class="notes">One important theme of Unexpected is to show as much relevant information
+          as possible.</aside>
+      </section>
+      <section class="slide" id="slide-2-1">
+        <div class="code lang-javascript">
+          <div><span style="color: #a71d5d">function</span>&nbsp;<span style="color: #000000">Person</span>
+            <span
+            style="color: #000000">()</span>&nbsp;<span style="color: #000000">{</span>
+          </div>
+          <div>&nbsp;&nbsp;<span style="color: #a71d5d">this</span><span style="color: #000000">.</span>names&nbsp;
+            <span
+            style="color: #a71d5d">=</span>&nbsp;Array<span style="color: #000000">.</span>prototype
+              <span
+              style="color: #000000">.</span>slice<span style="color: #000000">.</span><span style="color: #000000">call</span>
+                <span
+                style="color: #000000">(</span>arguments<span style="color: #000000">);</span>
+          </div>
+          <div>&nbsp;&nbsp;Object<span style="color: #000000">.</span><span style="color: #000000">defineProperty</span>
+            <span
+            style="color: #000000">(</span><span style="color: #a71d5d">this</span><span style="color: #000000">,</span>&nbsp;
+              <span
+              style="color: #df5000">'fullName'</span><span style="color: #000000">,</span>&nbsp;<span style="color: #000000">{</span>
+          </div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #a71d5d">get</span><span style="color: #000000">:</span>&nbsp;
+            <span
+            style="color: #a71d5d">function</span>&nbsp;<span style="color: #000000">()</span>&nbsp;
+              <span
+              style="color: #000000">{</span>
+          </div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #a71d5d">return</span>&nbsp;
+            <span
+            style="color: #a71d5d">this</span><span style="color: #000000">.</span>names<span style="color: #000000">.</span>
+              <span
+              style="color: #000000">join</span><span style="color: #000000">(</span><span style="color: #df5000">'&nbsp;'</span>
+                <span
+                style="color: #000000">);</span>
+          </div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #000000">}</span>
+          </div>
+          <div>&nbsp;&nbsp;<span style="color: #000000">});</span>
+          </div>
+          <div><span style="color: #000000">}</span>
+          </div>
+          <div>&nbsp;</div>
+          <div><span style="color: #a71d5d">var</span>&nbsp;sune&nbsp;<span style="color: #a71d5d">=</span>&nbsp;
+            <span
+            style="color: #a71d5d">new</span>&nbsp;Person<span style="color: #000000">(</span><span style="color: #df5000">'Sune'</span>
+              <span
+              style="color: #000000">,</span>&nbsp;<span style="color: #df5000">'Sloth'</span><span style="color: #000000">,</span>&nbsp;
+                <span
+                style="color: #df5000">'Simonsen'</span><span style="color: #000000">);</span>
+          </div>
+        </div>
+        <aside class="notes">what happens if we expect full name to start with the family name?</aside>
+      </section>
+      <section class="slide" id="slide-2-2">
+        <div class="code lang-javascript">
+          <div><span style="color: #000000">expect</span><span style="color: #000000">(</span>sune
+            <span
+            style="color: #000000">,</span>&nbsp;<span style="color: #df5000">'to&nbsp;satisfy'</span>
+              <span
+              style="color: #000000">,</span>&nbsp;<span style="color: #000000">{</span>&nbsp;fullName
+                <span
+                style="color: #000000">:</span>&nbsp;<span style="color: #df5000">'Simonsen,&nbsp;Sune&nbsp;Sloth'</span>&nbsp;
+                  <span
+                  style="color: #000000">});</span>
+          </div>
+        </div>
+        <div class="output">
+          <div><span style="color: red; font-weight: bold">expected</span>&nbsp;Person({&nbsp;
+            <span
+            style="color: #555">names</span>:&nbsp;[&nbsp;<span style="color: #df5000">'Sune'</span>,&nbsp;
+              <span
+              style="color: #df5000">'Sloth'</span>,&nbsp;<span style="color: #df5000">'Simonsen'</span>&nbsp;]&nbsp;})</div>
+          <div><span style="color: red; font-weight: bold">to&nbsp;satisfy</span>&nbsp;{&nbsp;
+            <span
+            style="color: #555">fullName</span>:&nbsp;<span style="color: #df5000">'Simonsen,&nbsp;Sune&nbsp;Sloth'</span>&nbsp;}</div>
+          <div>&nbsp;</div>
+          <div>Person({</div>
+          <div>&nbsp;&nbsp;
+            <div style="display: inline-block; vertical-align: top">
+              <div><span style="color: #555">names</span>:&nbsp;[&nbsp;<span style="color: #df5000">'Sune'</span>,&nbsp;
+                <span
+                style="color: #df5000">'Sloth'</span>,&nbsp;<span style="color: #df5000">'Simonsen'</span>&nbsp;],</div>
+            </div>
+          </div>
+          <div>&nbsp;&nbsp;
+            <div style="display: inline-block; vertical-align: top">
+              <div><span style="color: #555">fullName</span>:</div>
+              <div>&nbsp;&nbsp;
+                <div style="display: inline-block; vertical-align: top">
+                  <div><span style="color: #df5000">'Sune&nbsp;Sloth&nbsp;Simonsen'</span>&nbsp;
+                    <div
+                    style="display: inline-block; vertical-align: top">
+                      <div><span style="color: red; font-weight: bold">//</span>
+                      </div>
+                      <div><span style="color: red; font-weight: bold">//</span>
+                      </div>
+                      <div><span style="color: red; font-weight: bold">//</span>
+                      </div>
+                      <div><span style="color: red; font-weight: bold">//</span>
+                      </div>
+                  </div>&nbsp;
+                  <div style="display: inline-block; vertical-align: top">
+                    <div><span style="color: red; font-weight: bold">should&nbsp;equal</span>&nbsp;
+                      <div
+                      style="display: inline-block; vertical-align: top">
+                        <div><span style="color: #df5000">'Simonsen,&nbsp;Sune&nbsp;Sloth'</span>
+                        </div>
+                    </div>
+                  </div>
+                  <div>&nbsp;</div>
+                  <div><span style="color: red">Sune&nbsp;Sloth</span><span style="background-color: red; color: white">&nbsp;Simonsen</span>
+                  </div>
+                  <div><span style="background-color: green; color: white">Simonsen,&nbsp;</span>
+                    <span
+                    style="color: green">Sune&nbsp;Sloth</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        <div>})</div>
+        </div>
+        <aside class="notes">you will have all the information you need without even opening the test.</aside>
+      </section>
+    </section>
+    <section class="section" id="section-3">
+      <section class="slide" id="slide-3-0">
+        
+<h2 id="being-precise-makes-a-difference">Being precise makes a difference</h2>
+
+        <aside class="notes">We try to make our error messages as descriptive as possible.</aside>
+      </section>
+      <section class="slide" id="slide-3-1">
+        <div class="code lang-javascript">
+          <div><span style="color: #000000">expect</span><span style="color: #000000">([</span>&nbsp;
+            <span
+            style="color: #0086b3">0</span><span style="color: #000000">,</span>&nbsp;<span style="color: #0086b3">1</span>
+              <span
+              style="color: #000000">,</span>&nbsp;<span style="color: #0086b3">2</span><span style="color: #000000">,</span>&nbsp;
+                <span
+                style="color: #0086b3">4</span><span style="color: #000000">,</span>&nbsp;<span style="color: #0086b3">5</span>
+                  <span
+                  style="color: #000000">],</span>&nbsp;<span style="color: #df5000">'to&nbsp;equal'</span>
+                    <span
+                    style="color: #000000">,</span>&nbsp;<span style="color: #000000">[</span>&nbsp;<span style="color: #0086b3">1</span>
+                      <span
+                      style="color: #000000">,</span>&nbsp;<span style="color: #0086b3">2</span><span style="color: #000000">,</span>&nbsp;
+                        <span
+                        style="color: #0086b3">3</span><span style="color: #000000">,</span>&nbsp;<span style="color: #0086b3">4</span>
+                          <span
+                          style="color: #000000">]);</span>
+          </div>
+        </div>
+        <div class="output">
+          <div><span style="color: red; font-weight: bold">expected</span>&nbsp;[&nbsp;
+            <span
+            style="color: #0086b3">0</span>,&nbsp;<span style="color: #0086b3">1</span>,&nbsp;<span style="color: #0086b3">2</span>,&nbsp;
+              <span
+              style="color: #0086b3">4</span>,&nbsp;<span style="color: #0086b3">5</span>&nbsp;]&nbsp;
+                <span
+                style="color: red; font-weight: bold">to&nbsp;equal</span>&nbsp;[&nbsp;<span style="color: #0086b3">1</span>,&nbsp;
+                  <span
+                  style="color: #0086b3">2</span>,&nbsp;<span style="color: #0086b3">3</span>,&nbsp;<span style="color: #0086b3">4</span>&nbsp;]</div>
+          <div>&nbsp;</div>
+          <div>[</div>
+          <div>&nbsp;&nbsp;
+            <div style="display: inline-block; vertical-align: top">
+              <div>
+                <div style="display: inline-block; vertical-align: top">
+                  <div>
+                    <div style="display: inline-block; vertical-align: top">
+                      <div><span style="color: #0086b3">0</span>,&nbsp;<span style="color: red; font-weight: bold">//&nbsp;should&nbsp;be&nbsp;removed</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div style="display: inline-block; vertical-align: top">
+                  <div>
+                    <div style="display: inline-block; vertical-align: top">
+                      <div><span style="color: #0086b3">1</span>,</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div style="display: inline-block; vertical-align: top">
+                  <div>
+                    <div style="display: inline-block; vertical-align: top">
+                      <div><span style="color: #0086b3">2</span>,</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div style="display: inline-block; vertical-align: top">
+                  <div>
+                    <div style="display: inline-block; vertical-align: top">
+                      <div><span style="color: red; font-weight: bold">//</span>
+                      </div>
+                    </div>&nbsp;
+                    <div style="display: inline-block; vertical-align: top">
+                      <div><span style="color: red; font-weight: bold">missing&nbsp;</span>
+                        <div style="display: inline-block; vertical-align: top">
+                          <div><span style="color: #0086b3">3</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div style="display: inline-block; vertical-align: top">
+                  <div>
+                    <div style="display: inline-block; vertical-align: top">
+                      <div><span style="color: #0086b3">4</span>,</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div style="display: inline-block; vertical-align: top">
+                  <div>
+                    <div style="display: inline-block; vertical-align: top">
+                      <div><span style="color: #0086b3">5</span>&nbsp;<span style="color: red; font-weight: bold">//&nbsp;should&nbsp;be&nbsp;removed</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>]</div>
+        </div>
+        <aside class="notes">Colors is a big part of highlighting a problem to the user. We support
+          colors in both the console and the browser from mocha v2.3.0.</aside>
+        <aside
+        class="notes">We provide diffs for most things.</aside>
+      </section>
+      <section class="slide" id="slide-3-2">
+        <p>We even diff buffers:</p>
+        <div class="code lang-javascript">
+          <div><span style="color: #000000">expect</span><span style="color: #000000">(</span>
+            <span
+            style="color: #a71d5d">new</span>&nbsp;Buffer<span style="color: #000000">(</span><span style="color: #df5000">'wat?'</span>
+              <span
+              style="color: #000000">,</span>&nbsp;<span style="color: #df5000">'utf-8'</span><span style="color: #000000">),</span>
+          </div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #df5000">'to&nbsp;equal'</span>
+            <span
+            style="color: #000000">,</span>
+          </div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #a71d5d">new</span>&nbsp;Buffer
+            <span
+            style="color: #000000">(</span><span style="color: #df5000">'what?'</span><span style="color: #000000">,</span>&nbsp;
+              <span
+              style="color: #df5000">'utf-8'</span><span style="color: #000000">));</span>
+          </div>
+        </div>
+        <div class="output">
+          <div><span style="color: red; font-weight: bold">expected</span>&nbsp;
+            <span
+            style="color: #000000">Buffer</span><span style="color: #000000">([</span><span style="color: #0086b3">0x77</span>
+              <span
+              style="color: #000000">,</span>&nbsp;<span style="color: #0086b3">0x61</span><span style="color: #000000">,</span>&nbsp;
+                <span
+                style="color: #0086b3">0x74</span><span style="color: #000000">,</span>&nbsp;<span style="color: #0086b3">0x3F</span>
+                  <span
+                  style="color: #000000">])</span>
+          </div>
+          <div><span style="color: red; font-weight: bold">to&nbsp;equal</span>&nbsp;
+            <span
+            style="color: #000000">Buffer</span><span style="color: #000000">([</span><span style="color: #0086b3">0x77</span>
+              <span
+              style="color: #000000">,</span>&nbsp;<span style="color: #0086b3">0x68</span><span style="color: #000000">,</span>&nbsp;
+                <span
+                style="color: #0086b3">0x61</span><span style="color: #000000">,</span>&nbsp;<span style="color: #0086b3">0x74</span>
+                  <span
+                  style="color: #000000">,</span>&nbsp;<span style="color: #0086b3">0x3F</span><span style="color: #000000">])</span>
+          </div>
+          <div>&nbsp;</div>
+          <div><span style="color: red">77</span>&nbsp;<span style="color: red">61</span>&nbsp;
+            <span
+            style="color: red">74</span>&nbsp;<span style="color: red">3F</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│
+              <span
+              style="color: red">wat?</span>│</div>
+          <div><span style="color: green">77</span>&nbsp;<span style="color: green">6</span>
+            <span
+            style="background-color: green; color: white">8</span>&nbsp;<span style="background-color: green; color: white">6</span>
+              <span
+              style="color: green">1</span>&nbsp;<span style="color: green">74</span>&nbsp;<span style="color: green">3F</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│
+                <span
+                style="color: green">w</span><span style="background-color: green; color: white">h</span>
+                  <span
+                  style="color: green">at?</span>│</div>
+        </div>
+        <aside class="notes">notice that we just used &#39;to equal&#39;.</aside>
+      </section>
+      <section class="slide" id="slide-3-3">
+        <p>Generally we try to be as helpful as possible:</p>
+        <div class="code lang-javascript">
+          <div><span style="color: #000000">expect</span><span style="color: #000000">(</span>
+            <span
+            style="color: #df5000">'Hello&nbsp;ugly&nbsp;world!'</span><span style="color: #000000">,</span>&nbsp;
+              <span
+              style="color: #df5000">'not&nbsp;to&nbsp;match'</span><span style="color: #000000">,</span>&nbsp;
+                <span
+                style="color: #183691">/ugly/</span><span style="color: #000000">);</span>
+          </div>
+        </div>
+        <div class="output">
+          <div><span style="color: red; font-weight: bold">expected</span>&nbsp;
+            <span
+            style="color: #df5000">'Hello&nbsp;ugly&nbsp;world!'</span>&nbsp;<span style="color: red; font-weight: bold">not&nbsp;to&nbsp;match</span>&nbsp;
+              <span
+              style="color: #183691">/ugly/</span>
+          </div>
+          <div>&nbsp;</div>
+          <div>Hello&nbsp;<span style="background-color: red; color: white">ugly</span>&nbsp;world!</div>
+        </div>
+      </section>
+    </section>
+    <section class="section" id="section-4">
+      <section class="slide" id="slide-4-0">
+        
+<h2 id="invalidates-best-practices">Invalidates best practices</h2>
+
+        <aside class="notes">I like to think that Unexpected changes the way you write tests.</aside>
+        <aside
+        class="notes">People generally has strong opinions about testing.</aside>
+      </section>
+      <section class="slide" id="slide-4-1">
+        <blockquote>
+          <p>There should only be one assertion per test!</p>
+        </blockquote>
+      </section>
+      <section class="slide" id="slide-4-2">
+        <blockquote>
+          <p>A single assert per unit test is a great way to test the reader&#39;s
+            ability to scroll up and down.</p>
+        </blockquote>
+        <aside class="notes">Not everyone agrees</aside>
+      </section>
+      <section class="slide" id="slide-4-3">
+        <blockquote>
+          <p>A test should be concise and readable.</p>
+        </blockquote>
+      </section>
+      <section class="slide" id="slide-4-4">
+        <p>Match your object hierarchy against a specification:</p>
+        <div class="code lang-javascript">
+          <div><span style="color: #a71d5d">var</span>&nbsp;sune&nbsp;<span style="color: #a71d5d">=</span>&nbsp;
+            <span
+            style="color: #000000">{</span>&nbsp;name<span style="color: #000000">:</span>&nbsp;<span style="color: #df5000">'Sune'</span>
+              <span
+              style="color: #000000">,</span>&nbsp;gender<span style="color: #000000">:</span>&nbsp;<span style="color: #df5000">'mail'</span>
+                <span
+                style="color: #000000">,</span>&nbsp;age<span style="color: #000000">:</span>&nbsp;<span style="color: #0086b3">35</span>
+                  <span
+                  style="color: #000000">,</span>&nbsp;children<span style="color: #000000">:</span>&nbsp;
+                    <span
+                    style="color: #0086b3">2</span>&nbsp;<span style="color: #000000">};</span>
+          </div>
+          <div>&nbsp;</div>
+          <div><span style="color: #000000">expect</span><span style="color: #000000">(</span>sune
+            <span
+            style="color: #000000">,</span>&nbsp;<span style="color: #df5000">'to&nbsp;satisfy'</span>
+              <span
+              style="color: #000000">,</span>&nbsp;<span style="color: #000000">{</span>
+          </div>
+          <div>&nbsp;&nbsp;name<span style="color: #000000">:</span>&nbsp;<span style="color: #183691">/.+/</span>
+            <span
+            style="color: #000000">,</span>
+          </div>
+          <div>&nbsp;&nbsp;age<span style="color: #000000">:</span>&nbsp;expect
+            <span
+            style="color: #000000">.</span><span style="color: #000000">it</span><span style="color: #000000">(</span>
+              <span
+              style="color: #df5000">'to&nbsp;be&nbsp;positive'</span><span style="color: #000000">),</span>
+          </div>
+          <div>&nbsp;&nbsp;gender<span style="color: #000000">:</span>&nbsp;<span style="color: #183691">/male|female/</span>
+          </div>
+          <div><span style="color: #000000">});</span>
+          </div>
+        </div>
+        <aside class="notes">we can state multiple requirements for an object.</aside>
+        <aside class="notes">notice that is no requirement for the <code>children</code> property.</aside>
+        <aside
+        class="notes">this of cause nests arbitrarily.</aside>
+      </section>
+      <section class="slide" id="slide-4-5">
+        <div class="output">
+          <div><span style="color: red; font-weight: bold">expected</span>&nbsp;{&nbsp;
+            <span
+            style="color: #555">name</span>:&nbsp;<span style="color: #df5000">'Sune'</span>,&nbsp;
+              <span
+              style="color: #555">gender</span>:&nbsp;<span style="color: #df5000">'mail'</span>,&nbsp;
+                <span
+                style="color: #555">age</span>:&nbsp;<span style="color: #0086b3">35</span>,&nbsp;<span style="color: #555">children</span>:&nbsp;
+                  <span
+                  style="color: #0086b3">2</span>&nbsp;}</div>
+          <div><span style="color: red; font-weight: bold">to&nbsp;satisfy</span>&nbsp;{&nbsp;
+            <span
+            style="color: #555">name</span>:&nbsp;<span style="color: #183691">/.+/</span>,&nbsp;
+              <span
+              style="color: #555">age</span>:&nbsp;
+                <div style="display: inline-block; vertical-align: top">
+                  <div>expect.it(<span style="color: #df5000">'to&nbsp;be&nbsp;positive'</span>),</div>
+                </div>&nbsp;<span style="color: #555">gender</span>:&nbsp;<span style="color: #183691">/male|female/</span>&nbsp;}</div>
+          <div>&nbsp;</div>
+          <div>{</div>
+          <div>&nbsp;&nbsp;
+            <div style="display: inline-block; vertical-align: top">
+              <div><span style="color: #555">name</span>:&nbsp;<span style="color: #df5000">'Sune'</span>,</div>
+            </div>
+          </div>
+          <div>&nbsp;&nbsp;
+            <div style="display: inline-block; vertical-align: top">
+              <div><span style="color: #555">gender</span>:&nbsp;<span style="color: #df5000">'mail'</span>,&nbsp;
+                <div
+                style="display: inline-block; vertical-align: top">
+                  <div><span style="color: red; font-weight: bold">//</span>
+                  </div>
+              </div>&nbsp;
+              <div style="display: inline-block; vertical-align: top">
+                <div><span style="color: red; font-weight: bold">should&nbsp;match</span>&nbsp;
+                  <div
+                  style="display: inline-block; vertical-align: top">
+                    <div><span style="color: #183691">/male|female/</span>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        <div>&nbsp;&nbsp;
+          <div style="display: inline-block; vertical-align: top">
+            <div><span style="color: #555">age</span>:&nbsp;<span style="color: #0086b3">35</span>,</div>
+          </div>
+        </div>
+        <div>&nbsp;&nbsp;
+          <div style="display: inline-block; vertical-align: top">
+            <div><span style="color: #555">children</span>:&nbsp;<span style="color: #0086b3">2</span>
+            </div>
+          </div>
+        </div>
+        <div>}</div>
+        </div>
+      </section>
+    </section>
+    <section class="section" id="section-5">
+      <section class="slide" id="slide-5-0">
+        
+<h2 id="the-world-is-not-sequential">The world is not sequential</h2>
+
+        <aside class="notes">Mocha provides a feature where you can make a test asynchronous by returning
+          a promise. Unexpected supports this model everywhere.</aside>
+      </section>
+      <section class="slide" id="slide-5-1">
+        <p>Asynchronous assertions:</p>
+        <div class="code lang-javascript">
+          <div><span style="color: #000000">it</span><span style="color: #000000">(</span>
+            <span
+            style="color: #df5000">'saves&nbsp;a&nbsp;magicpen&nbsp;image&nbsp;with&nbsp;correct&nbsp;metadata'</span>
+              <span
+              style="color: #000000">,</span>&nbsp;<span style="color: #a71d5d">function</span>&nbsp;
+                <span
+                style="color: #000000">()</span>&nbsp;<span style="color: #000000">{</span>
+          </div>
+          <div>&nbsp;&nbsp;<span style="color: #a71d5d">return</span>&nbsp;<span style="color: #000000">expect</span>
+            <span
+            style="color: #000000">(</span>
+          </div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #df5000">'magic-pen-6-colours.jpg'</span>
+            <span
+            style="color: #000000">,</span>
+          </div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #df5000">'to&nbsp;have&nbsp;metadata&nbsp;satisfying'</span>
+            <span
+            style="color: #000000">,</span>&nbsp;<span style="color: #000000">{</span>
+          </div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;format<span style="color: #000000">:</span>&nbsp;
+            <span
+            style="color: #df5000">'JPEG'</span><span style="color: #000000">,</span>
+          </div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #df5000">'Channel&nbsp;Depths'</span>
+            <span
+            style="color: #000000">:</span>&nbsp;<span style="color: #000000">{</span>&nbsp;Gray<span style="color: #000000">:</span>&nbsp;
+              <span
+              style="color: #df5000">'8&nbsp;bits'</span>&nbsp;<span style="color: #000000">},</span>
+          </div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size<span style="color: #000000">:</span>&nbsp;
+            <span
+            style="color: #000000">{</span>&nbsp;width<span style="color: #000000">:</span>&nbsp;<span style="color: #0086b3">200</span>
+              <span
+              style="color: #000000">,</span>&nbsp;height<span style="color: #000000">:</span>&nbsp;<span style="color: #0086b3">400</span>&nbsp;
+                <span
+                style="color: #000000">}</span>
+          </div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #000000">}</span>
+          </div>
+          <div>&nbsp;&nbsp;<span style="color: #000000">});</span>
+          </div>
+          <div><span style="color: #000000">});</span>
+          </div>
+        </div>
+        <p><a href="http://unexpected.js.org/unexpected-image/">http://unexpected.js.org/unexpected-image/</a>
+        </p>
+      </section>
+      <section class="slide" id="slide-5-2">
+        <p>...and they compose:</p>
+        <div class="code lang-javascript">
+          <div>it&nbsp;<span style="color: #000000">(</span><span style="color: #df5000">'produces&nbsp;the&nbsp;correct&nbsp;png&nbsp;output'</span>
+            <span
+            style="color: #000000">,</span>&nbsp;<span style="color: #a71d5d">function</span>&nbsp;
+              <span
+              style="color: #000000">()</span>&nbsp;<span style="color: #000000">{</span>
+          </div>
+          <div>&nbsp;&nbsp;<span style="color: #a71d5d">return</span>&nbsp;<span style="color: #000000">expect</span>
+            <span
+            style="color: #000000">(</span>
+          </div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #000000">createPngImageStream</span>
+            <span
+            style="color: #000000">(</span><span style="color: #df5000">'bar.tiff'</span><span style="color: #000000">),</span>
+          </div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #df5000">'to&nbsp;yield&nbsp;output&nbsp;satisfying'</span>
+            <span
+            style="color: #000000">,</span>
+          </div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;expect<span style="color: #000000">.</span>
+            <span
+            style="color: #000000">it</span><span style="color: #000000">(</span><span style="color: #df5000">'to&nbsp;resemble'</span>
+              <span
+              style="color: #000000">,</span>&nbsp;<span style="color: #df5000">'bar.png'</span><span style="color: #000000">,</span>&nbsp;
+                <span
+                style="color: #000000">{</span>
+          </div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mismatchPercentage<span style="color: #000000">:</span>&nbsp;expect
+            <span
+            style="color: #000000">.</span><span style="color: #000000">it</span><span style="color: #000000">(</span>
+              <span
+              style="color: #df5000">'to&nbsp;be&nbsp;less&nbsp;than'</span><span style="color: #000000">,</span>&nbsp;
+                <span
+                style="color: #0086b3">10</span><span style="color: #000000">)</span>
+          </div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #000000">}).</span><span style="color: #000000">and</span>
+            <span
+            style="color: #000000">(</span><span style="color: #df5000">'to&nbsp;have&nbsp;metadata&nbsp;satisfying'</span>
+              <span
+              style="color: #000000">,</span>&nbsp;<span style="color: #000000">{</span>
+          </div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;format<span style="color: #000000">:</span>&nbsp;
+            <span
+            style="color: #df5000">'PNG'</span>
+          </div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #000000">})</span>
+          </div>
+          <div>&nbsp;&nbsp;<span style="color: #000000">);</span>
+          </div>
+          <div><span style="color: #000000">});</span>
+          </div>
+        </div>
+        <p><a href="http://unexpected.js.org/unexpected-stream/">http://unexpected.js.org/unexpected-stream/</a>
+        </p>
+        <aside class="notes">this is where we left the competition in the dust :-)</aside>
+      </section>
+    </section>
+    <section class="section" id="section-6">
+      <section class="slide" id="slide-6-0">
+        
+<h2 id="extensible-from-the-ground-up">Extensible from the ground up</h2>
+
+        <aside class="notes">Unexpected is build from an extensible core and all the types and assertion
+          provided by core, is build on the same API&#39;s that will be available
+          to you as a plugin developer.</aside>
+      </section>
+      <section class="slide" id="slide-6-1">
+        
+<h3 id="adding-assertions">Adding assertions</h3>
+
+      </section>
+      <section class="slide" id="slide-6-2">
+        <div class="code lang-javascript">
+          <div><span style="color: #a71d5d">var</span>&nbsp;arr&nbsp;<span style="color: #a71d5d">=</span>&nbsp;
+            <span
+            style="color: #000000">[</span><span style="color: #0086b3">1</span><span style="color: #000000">,</span>&nbsp;
+              <span
+              style="color: #0086b3">2</span><span style="color: #000000">,</span>&nbsp;<span style="color: #0086b3">3</span>
+                <span
+                style="color: #000000">];</span>
+          </div>
+          <div>&nbsp;</div>
+          <div><span style="color: #000000">expect</span><span style="color: #000000">(</span>arr
+            <span
+            style="color: #000000">,</span>&nbsp;<span style="color: #df5000">'to&nbsp;equal'</span>
+              <span
+              style="color: #000000">,</span>&nbsp;<span style="color: #000000">[].</span><span style="color: #000000">concat</span>
+                <span
+                style="color: #000000">(</span>arr<span style="color: #000000">).</span><span style="color: #000000">sort</span>
+                  <span
+                  style="color: #000000">());</span>
+          </div>
+        </div>
+      </section>
+      <section class="slide" id="slide-6-3">
+        <div class="code lang-javascript">
+          <div>expect<span style="color: #000000">.</span><span style="color: #000000">addAssertion</span>
+            <span
+            style="color: #000000">(</span><span style="color: #df5000">'&lt;array&gt;&nbsp;to&nbsp;be&nbsp;sorted&nbsp;&lt;function?&gt;'</span>
+              <span
+              style="color: #000000">,</span>
+          </div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span
+            style="color: #a71d5d">function</span>&nbsp;<span style="color: #000000">(</span>expect
+              <span
+              style="color: #000000">,</span>&nbsp;arr<span style="color: #000000">,</span>&nbsp;cmp<span style="color: #000000">)</span>&nbsp;
+                <span
+                style="color: #000000">{</span>
+          </div>
+          <div>&nbsp;&nbsp;<span style="color: #000000">expect</span><span style="color: #000000">(</span>arr
+            <span
+            style="color: #000000">,</span>&nbsp;<span style="color: #df5000">'to&nbsp;equal'</span>
+              <span
+              style="color: #000000">,</span>&nbsp;<span style="color: #000000">[].</span><span style="color: #000000">concat</span>
+                <span
+                style="color: #000000">(</span>arr<span style="color: #000000">).</span><span style="color: #000000">sort</span>
+                  <span
+                  style="color: #000000">(</span>cmp<span style="color: #000000">));</span>
+          </div>
+          <div><span style="color: #000000">});</span>
+          </div>
+        </div>
+      </section>
+      <section class="slide" id="slide-6-4">
+        <div class="code lang-javascript">
+          <div><span style="color: #000000">expect</span><span style="color: #000000">([</span>
+            <span
+            style="color: #0086b3">1</span><span style="color: #000000">,</span>&nbsp;<span style="color: #0086b3">2</span>
+              <span
+              style="color: #000000">,</span>&nbsp;<span style="color: #0086b3">3</span><span style="color: #000000">],</span>&nbsp;
+                <span
+                style="color: #df5000">'to&nbsp;be&nbsp;sorted'</span><span style="color: #000000">);</span>
+          </div>
+          <div><span style="color: #000000">expect</span><span style="color: #000000">([</span>
+            <span
+            style="color: #0086b3">3</span><span style="color: #000000">,</span>&nbsp;<span style="color: #0086b3">2</span>
+              <span
+              style="color: #000000">,</span>&nbsp;<span style="color: #0086b3">1</span><span style="color: #000000">],</span>&nbsp;
+                <span
+                style="color: #df5000">'to&nbsp;be&nbsp;sorted'</span><span style="color: #000000">,</span>&nbsp;
+                  <span
+                  style="color: #a71d5d">function</span>&nbsp;<span style="color: #000000">(</span>a<span style="color: #000000">,</span>&nbsp;b
+                    <span
+                    style="color: #000000">)</span>&nbsp;<span style="color: #000000">{</span>
+          </div>
+          <div>&nbsp;&nbsp;<span style="color: #a71d5d">return</span>&nbsp;b&nbsp;
+            <span
+            style="color: #a71d5d">-</span>&nbsp;a<span style="color: #000000">;</span>
+          </div>
+          <div><span style="color: #000000">});</span>
+          </div>
+        </div>
+      </section>
+      <section class="slide" id="slide-6-5">
+        <div class="code lang-javascript">
+          <div><span style="color: #000000">expect</span><span style="color: #000000">([</span>
+            <span
+            style="color: #0086b3">2</span><span style="color: #000000">,</span>&nbsp;<span style="color: #0086b3">1</span>
+              <span
+              style="color: #000000">,</span>&nbsp;<span style="color: #0086b3">3</span><span style="color: #000000">],</span>&nbsp;
+                <span
+                style="color: #df5000">'to&nbsp;be&nbsp;sorted'</span><span style="color: #000000">);</span>
+          </div>
+        </div>
+        <div class="output">
+          <div><span style="color: red; font-weight: bold">expected</span>&nbsp;[&nbsp;
+            <span
+            style="color: #0086b3">2</span>,&nbsp;<span style="color: #0086b3">1</span>,&nbsp;<span style="color: #0086b3">3</span>&nbsp;]&nbsp;
+              <span
+              style="color: red; font-weight: bold">to&nbsp;be&nbsp;sorted</span>
+          </div>
+          <div>&nbsp;</div>
+          <div>[</div>
+          <div>
+            <div style="display: inline-block; vertical-align: top">
+              <div>┌─▷</div>
+              <div>│</div>
+              <div>└──</div>
+            </div>
+            <div style="display: inline-block; vertical-align: top">
+              <div>&nbsp;</div>
+              <div>&nbsp;
+                <div style="display: inline-block; vertical-align: top">
+                  <div>
+                    <div style="display: inline-block; vertical-align: top">
+                      <div><span style="color: #0086b3">2</span>,</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>&nbsp;
+                <div style="display: inline-block; vertical-align: top">
+                  <div><span style="color: #0086b3">1</span>,&nbsp;<span style="color: red; font-weight: bold">//&nbsp;should&nbsp;be&nbsp;moved</span>
+                  </div>
+                </div>
+              </div>
+              <div>&nbsp;
+                <div style="display: inline-block; vertical-align: top">
+                  <div>
+                    <div style="display: inline-block; vertical-align: top">
+                      <div><span style="color: #0086b3">3</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>]</div>
+        </div>
+        <aside class="notes">Notice how I didn&#39;t specify how the output should be. It is of cause
+          very possible to make completely custom output, but it is usually not necessary.</aside>
+        <aside
+        class="notes">The provided diff will state why the array is not sorted.</aside>
+      </section>
+      <section class="slide" id="slide-6-6">
+        
+<h3 id="adding-types">Adding types</h3>
+
+        <aside class="notes">this wouldn&#39;t be very powerful if we could not provide new types.</aside>
+      </section>
+      <section class="slide" id="slide-6-7">
+        <div class="code lang-javascript">
+          <div><span style="color: #a71d5d">var</span>&nbsp;moment&nbsp;<span style="color: #a71d5d">=</span>&nbsp;
+            <span
+            style="color: #000000">require</span><span style="color: #000000">(</span><span style="color: #df5000">'moment'</span>
+              <span
+              style="color: #000000">);</span>
+          </div>
+          <div><span style="color: #000000">expect</span><span style="color: #000000">(</span>
+            <span
+            style="color: #000000">moment</span><span style="color: #000000">(</span><span style="color: #0086b3">31337</span>
+              <span
+              style="color: #000000">),</span>&nbsp;<span style="color: #df5000">'to&nbsp;equal'</span>
+                <span
+                style="color: #000000">,</span>&nbsp;<span style="color: #000000">moment</span><span style="color: #000000">(</span>
+                  <span
+                  style="color: #0086b3">1337</span><span style="color: #000000">));</span>
+          </div>
+        </div>
+      </section>
+      <section class="slide" id="slide-6-8">
+        <div class="output">
+          <div><span style="color: red; font-weight: bold">Cannot&nbsp;find&nbsp;module&nbsp;'moment'</span>
+          </div>
+        </div>
+      </section>
+      <section class="slide" id="slide-6-9">
+        <div class="code lang-javascript">
+          <div>expect<span style="color: #000000">.</span><span style="color: #000000">addType</span>
+            <span
+            style="color: #000000">({</span>
+          </div>
+          <div>&nbsp;&nbsp;name<span style="color: #000000">:</span>&nbsp;<span style="color: #df5000">'moment'</span>
+            <span
+            style="color: #000000">,</span>
+          </div>
+          <div>&nbsp;&nbsp;base<span style="color: #000000">:</span>&nbsp;<span style="color: #df5000">'object'</span>
+            <span
+            style="color: #000000">,</span>
+          </div>
+          <div>&nbsp;&nbsp;identify<span style="color: #000000">:</span>&nbsp;<span style="color: #a71d5d">function</span>&nbsp;
+            <span
+            style="color: #000000">(</span>v<span style="color: #000000">)</span>&nbsp;<span style="color: #000000">{</span>&nbsp;
+              <span
+              style="color: #a71d5d">return</span>&nbsp;v&nbsp;&amp;&amp;&nbsp;moment<span style="color: #000000">.</span>
+                <span
+                style="color: #000000">isMoment</span><span style="color: #000000">(</span>v<span style="color: #000000">);</span>&nbsp;
+                  <span
+                  style="color: #000000">},</span>
+          </div>
+          <div>&nbsp;&nbsp;inspect<span style="color: #000000">:</span>&nbsp;<span style="color: #a71d5d">function</span>&nbsp;
+            <span
+            style="color: #000000">(</span>v<span style="color: #000000">,</span>&nbsp;depth<span style="color: #000000">,</span>&nbsp;output
+              <span
+              style="color: #000000">)</span>&nbsp;<span style="color: #000000">{</span>
+          </div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output<span style="color: #000000">.</span>
+            <span
+            style="color: #000000">jsFunctionName</span><span style="color: #000000">(</span><span style="color: #df5000">'moment'</span>
+              <span
+              style="color: #000000">).</span><span style="color: #000000">text</span><span style="color: #000000">(</span>
+                <span
+                style="color: #df5000">'('</span><span style="color: #000000">)</span>
+          </div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span
+            style="color: #000000">.</span><span style="color: #000000">jsPrimitive</span><span style="color: #000000">(</span>v
+              <span
+              style="color: #000000">.</span><span style="color: #000000">toISOString</span><span style="color: #000000">()).</span>
+                <span
+                style="color: #000000">text</span><span style="color: #000000">(</span><span style="color: #df5000">')'</span>
+                  <span
+                  style="color: #000000">);</span>
+          </div>
+          <div>&nbsp;&nbsp;<span style="color: #000000">},</span>
+          </div>
+          <div>&nbsp;&nbsp;equal<span style="color: #000000">:</span>&nbsp;<span style="color: #a71d5d">function</span>&nbsp;
+            <span
+            style="color: #000000">(</span>a<span style="color: #000000">,</span>&nbsp;b<span style="color: #000000">)</span>&nbsp;
+              <span
+              style="color: #000000">{</span>&nbsp;<span style="color: #a71d5d">return</span>&nbsp;a<span style="color: #000000">.</span>
+                <span
+                style="color: #000000">isSame</span><span style="color: #000000">(</span>b<span style="color: #000000">);</span>&nbsp;
+                  <span
+                  style="color: #000000">},</span>
+          </div>
+          <div>&nbsp;&nbsp;diff<span style="color: #000000">:</span>&nbsp;<span style="color: #a71d5d">function</span>&nbsp;
+            <span
+            style="color: #000000">(</span>actual<span style="color: #000000">,</span>&nbsp;expected
+              <span
+              style="color: #000000">,</span>&nbsp;output<span style="color: #000000">,</span>&nbsp;diff
+                <span
+                style="color: #000000">)</span>&nbsp;<span style="color: #000000">{</span>
+          </div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #a71d5d">return</span>&nbsp;
+            <span
+            style="color: #000000">diff</span><span style="color: #000000">(</span>actual<span style="color: #000000">.</span>
+              <span
+              style="color: #000000">toISOString</span><span style="color: #000000">(),</span>&nbsp;expected
+                <span
+                style="color: #000000">.</span><span style="color: #000000">toISOString</span><span style="color: #000000">());</span>
+          </div>
+          <div>&nbsp;&nbsp;<span style="color: #000000">}</span>
+          </div>
+          <div><span style="color: #000000">});</span>
+          </div>
+        </div>
+      </section>
+      <section class="slide" id="slide-6-10">
+        <div class="code lang-javascript">
+          <div><span style="color: #000000">expect</span><span style="color: #000000">(</span>
+            <span
+            style="color: #000000">moment</span><span style="color: #000000">(</span><span style="color: #0086b3">31337</span>
+              <span
+              style="color: #000000">),</span>&nbsp;<span style="color: #df5000">'to&nbsp;equal'</span>
+                <span
+                style="color: #000000">,</span>&nbsp;<span style="color: #000000">moment</span><span style="color: #000000">(</span>
+                  <span
+                  style="color: #0086b3">1337</span><span style="color: #000000">));</span>
+          </div>
+        </div>
+        <div class="output">
+          <div><span style="color: red; font-weight: bold">moment&nbsp;is&nbsp;not&nbsp;a&nbsp;function</span>
+          </div>
+        </div>
+      </section>
+      <section class="slide" id="slide-6-11">
+        
+<h4 id="almost-anything-is-possible">Almost anything is possible</h4>
+
+        <p>Create plugins that extends unexpected with new types, assertions, styles
+          and themes.</p>
+      </section>
+    </section>
+    <section class="section" id="section-7">
+      <section class="slide" id="slide-7-0">
+        
+<h2 id="unexpected-sinon">unexpected-sinon</h2>
+
+        
+<h3 id="testing-with-fakes">Testing with fakes</h3>
+
+      </section>
+      <section class="slide" id="slide-7-1">
+        <div class="code lang-javascript">
+          <div><span style="color: #a71d5d">function</span>&nbsp;<span style="color: #000000">Account</span>
+            <span
+            style="color: #000000">(</span>amount<span style="color: #000000">)</span>&nbsp;<span style="color: #000000">{</span>
+          </div>
+          <div>&nbsp;&nbsp;<span style="color: #a71d5d">var</span>&nbsp;that&nbsp;
+            <span
+            style="color: #a71d5d">=</span>&nbsp;<span style="color: #a71d5d">this</span><span style="color: #000000">;</span>
+          </div>
+          <div>&nbsp;&nbsp;that<span style="color: #000000">.</span>deposit&nbsp;
+            <span
+            style="color: #a71d5d">=</span>&nbsp;<span style="color: #a71d5d">function</span>&nbsp;
+              <span
+              style="color: #000000">(</span>amount<span style="color: #000000">)</span>&nbsp;<span style="color: #000000">{</span>&nbsp;
+                <span
+                style="color: #969896">/*...*/</span>&nbsp;<span style="color: #000000">};</span>
+          </div>
+          <div>&nbsp;&nbsp;that<span style="color: #000000">.</span>withdraw&nbsp;
+            <span
+            style="color: #a71d5d">=</span>&nbsp;<span style="color: #a71d5d">function</span>&nbsp;
+              <span
+              style="color: #000000">(</span>amount<span style="color: #000000">)</span>&nbsp;<span style="color: #000000">{</span>&nbsp;
+                <span
+                style="color: #969896">/*...*/</span>&nbsp;<span style="color: #000000">};</span>
+          </div>
+          <div>&nbsp;&nbsp;that<span style="color: #000000">.</span>transferTo&nbsp;
+            <span
+            style="color: #a71d5d">=</span>&nbsp;<span style="color: #a71d5d">function</span>&nbsp;
+              <span
+              style="color: #000000">(</span>amount<span style="color: #000000">,</span>&nbsp;currency
+                <span
+                style="color: #000000">,</span>&nbsp;destinationAccount<span style="color: #000000">)</span>&nbsp;
+                  <span
+                  style="color: #000000">{</span>
+          </div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;that<span style="color: #000000">.</span>
+            <span
+            style="color: #000000">withdraw</span><span style="color: #000000">(</span>amount<span style="color: #000000">);</span>
+          </div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;destinationAccount<span style="color: #000000">.</span>
+            <span
+            style="color: #000000">deposit</span><span style="color: #000000">(</span>amount<span style="color: #000000">);</span>
+          </div>
+          <div>&nbsp;&nbsp;<span style="color: #000000">};</span>
+          </div>
+          <div><span style="color: #000000">}</span>
+          </div>
+        </div>
+      </section>
+      <section class="slide" id="slide-7-2">
+        <div class="code lang-javascript">
+          <div><span style="color: #a71d5d">var</span>&nbsp;srcAccount&nbsp;<span style="color: #a71d5d">=</span>&nbsp;
+            <span
+            style="color: #a71d5d">new</span>&nbsp;Account<span style="color: #000000">();</span>
+          </div>
+          <div><span style="color: #a71d5d">var</span>&nbsp;destAccount&nbsp;<span style="color: #a71d5d">=</span>&nbsp;
+            <span
+            style="color: #a71d5d">new</span>&nbsp;Account<span style="color: #000000">();</span>
+          </div>
+          <div>&nbsp;</div>
+          <div><span style="color: #a71d5d">var</span>&nbsp;sinon&nbsp;<span style="color: #a71d5d">=</span>&nbsp;
+            <span
+            style="color: #000000">require</span><span style="color: #000000">(</span><span style="color: #df5000">'sinon'</span>
+              <span
+              style="color: #000000">);</span>
+          </div>
+          <div>sinon<span style="color: #000000">.</span><span style="color: #000000">spy</span>
+            <span
+            style="color: #000000">(</span>srcAccount<span style="color: #000000">,</span>&nbsp;<span style="color: #df5000">'withdraw'</span>
+              <span
+              style="color: #000000">);</span>
+          </div>
+          <div>sinon<span style="color: #000000">.</span><span style="color: #000000">spy</span>
+            <span
+            style="color: #000000">(</span>destAccount<span style="color: #000000">,</span>&nbsp;<span style="color: #df5000">'deposit'</span>
+              <span
+              style="color: #000000">);</span>
+          </div>
+          <div>&nbsp;</div>
+          <div>srcAccount<span style="color: #000000">.</span><span style="color: #000000">transferTo</span>
+            <span
+            style="color: #000000">(</span><span style="color: #0086b3">250</span><span style="color: #000000">,</span>&nbsp;
+              <span
+              style="color: #df5000">'dkk'</span><span style="color: #000000">,</span>&nbsp;destAccount
+                <span
+                style="color: #000000">);</span>
+          </div>
+        </div>
+      </section>
+      <section class="slide" id="slide-7-3">
+        <div class="code lang-javascript">
+          <div>expect<span style="color: #000000">.</span><span style="color: #000000">use</span>
+            <span
+            style="color: #000000">(</span><span style="color: #000000">require</span><span style="color: #000000">(</span>
+              <span
+              style="color: #df5000">'unexpected-sinon'</span><span style="color: #000000">));</span>
+          </div>
+          <div>&nbsp;</div>
+          <div><span style="color: #000000">expect</span><span style="color: #000000">([</span>srcAccount
+            <span
+            style="color: #000000">.</span>withdraw<span style="color: #000000">,</span>&nbsp;destAccount
+              <span
+              style="color: #000000">.</span>deposit<span style="color: #000000">],</span>
+          </div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #df5000">'to&nbsp;have&nbsp;calls&nbsp;satisfying'</span>
+            <span
+            style="color: #000000">,</span>&nbsp;<span style="color: #000000">[</span>
+          </div>
+          <div>&nbsp;&nbsp;<span style="color: #000000">{</span>&nbsp;spy<span style="color: #000000">:</span>&nbsp;srcAccount
+            <span
+            style="color: #000000">.</span>withdraw<span style="color: #000000">,</span>&nbsp;args<span style="color: #000000">:</span>&nbsp;
+              <span
+              style="color: #000000">[</span>&nbsp;<span style="color: #000000">{</span>&nbsp;amount<span style="color: #000000">:</span>&nbsp;
+                <span
+                style="color: #0086b3">250</span><span style="color: #000000">,</span>&nbsp;currency<span style="color: #000000">:</span>&nbsp;
+                  <span
+                  style="color: #df5000">'dkk'</span>&nbsp;<span style="color: #000000">}</span>&nbsp;<span style="color: #000000">]},</span>
+          </div>
+          <div>&nbsp;&nbsp;<span style="color: #000000">{</span>&nbsp;spy<span style="color: #000000">:</span>&nbsp;destAccount
+            <span
+            style="color: #000000">.</span>deposit<span style="color: #000000">,</span>&nbsp;args<span style="color: #000000">:</span>&nbsp;
+              <span
+              style="color: #000000">[</span>&nbsp;<span style="color: #000000">{</span>&nbsp;amount<span style="color: #000000">:</span>&nbsp;
+                <span
+                style="color: #0086b3">250</span><span style="color: #000000">,</span>&nbsp;currency<span style="color: #000000">:</span>&nbsp;
+                  <span
+                  style="color: #df5000">'dkk'</span>&nbsp;<span style="color: #000000">}</span>&nbsp;&nbsp;
+                    <span
+                    style="color: #000000">]</span>&nbsp;<span style="color: #000000">}</span>
+          </div>
+          <div><span style="color: #000000">]);</span>
+          </div>
+        </div>
+      </section>
+      <section class="slide" id="slide-7-4">
+        <div class="output">
+          <div><span style="color: red; font-weight: bold">Cannot&nbsp;find&nbsp;module&nbsp;'unexpected-sinon'</span>
+          </div>
+        </div>
+      </section>
+    </section>
+    <section class="section" id="section-8">
+      <section class="slide" id="slide-8-0">
+        
+<h2 id="questions">Questions</h2>
+
+      </section>
+    </section>
+    <section class="section" id="section-9">
+      <section class="slide" id="slide-9-0">
+        
+<h2 id="the-end">The end</h2>
+
+        <p>Stickers for everybody :-)</p>
+      </section>
+    </section>
+  </body>
+  <html>

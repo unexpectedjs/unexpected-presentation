@@ -1,0 +1,62 @@
+h1 {
+    font-size: 2.0em;
+}
+
+h2 {
+    font-size: 1.6em;
+}
+
+h3 {
+    font-size: 1.3em;
+}
+
+h4 {
+    font-size: 1.1em;
+}
+
+h1, h2, h3, h4, p {
+    text-align: center;
+}
+
+small {
+    font-size: 0.5em;
+}
+
+aside {
+    display: none;
+}
+
+.section {
+    width: 100vw;
+    font-size: 38px;
+}
+
+.slide {
+    width: 960px;
+}
+
+section .output,
+section .code {
+    color: black;
+    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    font-size: 0.55em;
+    white-space: nowrap;
+    line-height: 1.45;
+    margin: 0.5em 0;
+    padding: 16px;
+    overflow-x: auto;
+    text-align: left;
+    max-height: 450px;
+}
+
+section .code {
+  background-color: #f7f7f7;
+}
+section .output {
+  background-color: #f3f3f3;
+}
+
+section .code + .output {
+    border-top: thin solid #ddd;
+    margin-top: -0.5em;
+}
