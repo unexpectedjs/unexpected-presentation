@@ -94,7 +94,9 @@ module.exports = {
                     '<link href="./static/base.css" rel="stylesheet" type="text/css">' +
                     '</head>' +
                     '<body>' +
+                    '<article>' +
                     content +
+                    '</article>' +
                     '<script src="./static/presentation.js"></script>' +
                     '</body>' +
                     '<html>'

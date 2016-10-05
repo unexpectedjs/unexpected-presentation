@@ -32,7 +32,10 @@ aside {
 }
 
 .slide {
-    width: 960px;
+    box-sizing: border-box;
+    padding: 40px;
+    width: 1000px;
+    position: absolute;
 }
 
 .slide[aria-selected="false"] {
