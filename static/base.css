@@ -35,6 +35,10 @@ aside {
     width: 960px;
 }
 
+.slide[aria-selected="false"] {
+    display: none;
+}
+
 section .output,
 section .code {
     color: black;

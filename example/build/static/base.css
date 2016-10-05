@@ -19,7 +19,7 @@ h1, h2, h3, h4, p {
 }
 
 small {
-    font-size: 0.8em;
+    font-size: 0.5em;
 }
 
 aside {
@@ -33,6 +33,10 @@ aside {
 
 .slide {
     width: 960px;
+}
+
+.slide[aria-selected="false"] {
+    display: none;
 }
 
 section .output,

@@ -95,6 +95,7 @@ module.exports = {
                     '</head>' +
                     '<body>' +
                     content +
+                    '<script src="./static/presentation.js"></script>' +
                     '</body>' +
                     '<html>'
                 )
