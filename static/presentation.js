@@ -1,4 +1,5 @@
 var currentSlide
+var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'))
 
 function repositionSlide(slide) {
     var slideHeight = slide.clientHeight
@@ -31,66 +32,38 @@ function showSlide(slide) {
         history.pushState(slide.id, slide.id, hash)
     }
 
-    var slides = document.querySelectorAll('.slide')
-
-    for (var i = 0; i < slides.length; i += 1) {
-        slides[i].setAttribute('aria-selected', 'false')
-    }
+    slides.forEach((slide) => {
+        slide.setAttribute('aria-selected', 'false')
+    })
 
     slide.setAttribute('aria-selected', 'true')
     repositionSlide(slide)
     currentSlide = slide
 }
 
-function onLoad() {
-    var slide = location.hash && document.querySelector(location.hash)
-
-    if (!slide) {
-        return location.replace('#slide-0-0')
-    }
-
-    showSlide(slide)
-}
-
-onLoad()
 window.onresize = function () {
     repositionSlide(currentSlide)
 }
 
+function route () {
+    var slide = location.hash && document.querySelector(location.hash)
+    showSlide(slide || slides[0])
+}
+
 window.onpopstate = function(event) {
-  var slide = location.hash && document.querySelector(location.hash)
-  showSlide(slide)
+    route()
 };
+
+route()
 
 document.addEventListener('keydown', function (e) {
     if (e.keyCode === 32) { // Space
+        var index = slides.indexOf(currentSlide)
+
         if (e.shiftKey) {
-            // previous
-            var previousSlide = currentSlide.previousElementSibling
-            if (!previousSlide) {
-                var previousSection = currentSlide.parentElement.previousElementSibling
-                if (previousSection) {
-                    previousSlide = previousSection.lastElementChild
-                }
-            }
-
-            if (previousSlide) {
-                showSlide(previousSlide)
-            }
+            showSlide(slides[Math.max(index - 1, 0)])
         } else {
-            // next
-            var nextSlide = currentSlide.nextElementSibling
-            if (!nextSlide) {
-                var nextSection = currentSlide.parentElement.nextElementSibling
-                if (nextSection) {
-                    nextSlide = nextSection.firstElementChild
-                }
-            }
-
-            if (nextSlide) {
-                showSlide(nextSlide)
-            }
+            showSlide(slides[Math.min(index + 1, slides.length - 1)])
         }
     }
-
 })
