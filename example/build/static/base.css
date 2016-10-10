@@ -36,10 +36,11 @@ aside {
     padding: 40px;
     width: 1000px;
     position: absolute;
+    display: none;
 }
 
-.slide[aria-selected="false"] {
-    display: none;
+.slide[aria-selected="true"] {
+    display: block;
 }
 
 section .output,

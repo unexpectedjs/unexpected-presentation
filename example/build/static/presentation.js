@@ -26,6 +26,11 @@ function repositionSlide(slide) {
 }
 
 function showSlide(slide) {
+    var hash = '#' + slide.id
+    if (hash !== location.hash) {
+        history.pushState(slide.id, slide.id, hash)
+    }
+
     var slides = document.querySelectorAll('.slide')
 
     for (var i = 0; i < slides.length; i += 1) {
@@ -51,6 +56,11 @@ onLoad()
 window.onresize = function () {
     repositionSlide(currentSlide)
 }
+
+window.onpopstate = function(event) {
+  var slide = location.hash && document.querySelector(location.hash)
+  showSlide(slide)
+};
 
 document.addEventListener('keydown', function (e) {
     if (e.keyCode === 32) { // Space
