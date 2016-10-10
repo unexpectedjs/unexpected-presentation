@@ -99,13 +99,8 @@ module.exports = {
                     '</article>' +
                     '<script src="./static/presentation.js"></script>' +
                     '</body>' +
-                    '<html>'
+                    '</html>'
                 )
-            },
-            function (content, cb) {
-                cb(null, html.prettyPrint(content, {
-                    indent_size: 2
-                }));
             },
             function (content, cb) {
                 fs.writeFile(path.join(destination, path.basename(presentation, '.md')) + '.html', content, cb)
