@@ -3,107 +3,182 @@ function toArray (items) {
 }
 
 var slides = toArray(document.querySelectorAll('.slide'))
+
 var sections = toArray(document.querySelectorAll('.section'))
 
 var presentation = {
-    currentSection: 0,
+    lastPosition: { section: -1, slide: -1 },
+
+    position: {
+        section: 0,
+        slide: 0
+    },
+
     sections: sections.map(function (section) {
-        var sectionSlides = toArray(section.querySelectorAll('.slide'))
-        return {
-            currentSlide: 0,
-            slides: sectionSlides
-        }
+        return toArray(section.querySelectorAll('.slide'))
     }),
 
+    updatePosition: function (section, slide) {
+        if (0 <= section && section < this.sections.length) {
+            this.lastPosition = {
+                section: this.position.section,
+                slide: this.position.slide
+            }
+
+            this.position.section = section
+            if (0 <= slide && slide < this.sections[section].length) {
+                this.position.slide = slide
+            }
+        }
+    },
+
     getCurrentSection: function () {
-        return this.sections[this.currentSection]
+        return this.sections[this.position.section]
+    },
+
+    getSlideAtPosition: function (position) {
+        var section = this.sections[position.section]
+        var slide = section && section[position.slide]
+        return slide || null
+    },
+
+    getLastSlide: function () {
+        return this.getSlideAtPosition(this.lastPosition)
     },
 
     getCurrentSlide: function () {
-        var section = this.getCurrentSection()
-        var slide = section.slides[section.currentSlide]
-        return slide
+        return this.getSlideAtPosition(this.position)
     },
 
     isFirstSection: function () {
-        return this.currentSection === 0
+        return this.position.section === 0
     },
 
     isLastSection: function () {
-        return this.currentSection === this.sections.length - 1
+        return this.position.section === this.sections.length - 1
     },
 
     nextSection: function () {
-        if (!this.isLastSection()) {
-            this.currentSection++
-            this.getCurrentSection().currentSlide = 0
-        }
+        this.updatePosition(
+            this.position.section + 1,
+            0
+        )
     },
 
     prevSection: function () {
-        if (!this.isFirstSection()) {
-            this.currentSection--
-            var section = this.getCurrentSection()
-            section.currentSlide = section.slides.length - 1
-        }
+        var section = this.getCurrentSection()
+        this.updatePosition(
+            this.position.section - 1,
+            section.length - 1
+        )
     },
 
     nextSlide: function () {
         var section = this.getCurrentSection()
-        if (section.currentSlide < section.slides.length - 1) {
-            section.currentSlide++
+        if (this.position.slide < section.length - 1) {
+            this.updatePosition(
+                this.position.section,
+                this.position.slide + 1
+            )
         } else {
             this.nextSection()
         }
     },
 
     prevSlide: function () {
-        var section = this.getCurrentSection()
-        if (section.currentSlide > 0) {
-            section.currentSlide--
+        if (this.position.slide > 0) {
+            this.updatePosition(
+                this.position.section,
+                this.position.slide - 1
+            )
         } else {
             this.prevSection()
         }
     },
 
     leftSlide: function () {
-        if (!this.isFirstSection()) {
-            this.currentSection--
-        }
+        this.updatePosition(
+            this.position.section - 1,
+            0
+        )
     },
 
     rightSlide: function () {
-        if (!this.isLastSection()) {
-            this.currentSection++
-        }
+        this.nextSection()
     },
 
     upSlide: function () {
-        var section = this.getCurrentSection()
-        var nextSlide = Math.max(section.currentSlide - 1, 0)
-        section.currentSlide = nextSlide
+        this.updatePosition(
+            this.position.section,
+            this.position.slide - 1
+        )
     },
 
     downSlide: function () {
+        this.updatePosition(
+            this.position.section,
+            this.position.slide + 1
+        )
+    },
+
+    restart: function () {
+        this.updatePosition(
+            0,
+            0
+        )
+    },
+
+    showLastSlide: function () {
         var section = this.getCurrentSection()
-        var nextSlide = Math.min(section.currentSlide + 1, section.slides.length - 1)
-        section.currentSlide = nextSlide
+        this.updatePosition(
+            this.sections.length - 1,
+            section.length - 1
+        )
+    },
+
+    getDirection: function (last, next) {
+        if (last.section < next.section) {
+            return 'left'
+        } else if (last.section > next.section) {
+            return 'right'
+        } else if (last.slide < next.slide) {
+            return 'up'
+        } else if (last.slide > next.slide) {
+            return 'down'
+        } else {
+            return 'none'
+        }
     },
 
     render: function () {
-        var slide = this.getCurrentSlide()
+        if (
+            this.lastPosition.section !== this.position.section ||
+            this.lastPosition.slide !== this.position.slide
+        ) {
+            console.log(this.lastPosition, this.position);
+            var slide = this.getCurrentSlide()
+            var lastSlide = this.getLastSlide()
 
-        var hash = '#' + slide.id
-        if (hash !== location.hash) {
-            history.pushState(slide.id, slide.id, hash)
+            var hash = '#' + slide.id
+            if (hash !== location.hash) {
+                history.pushState(slide.id, slide.id, hash)
+            }
+
+
+            if (lastSlide) {
+                var direction = this.getDirection(this.lastPosition, this.position)
+                document.body.className = 'transition-' + direction
+
+                lastSlide.classList.add('slide-out')
+                setTimeout(function () {
+                    lastSlide.classList.remove('slide-out')
+                }, 400);
+                lastSlide.setAttribute('aria-selected', 'false')
+            }
+
+            slide.setAttribute('aria-selected', 'true')
+            repositionSlide(slide)
         }
-
-        slides.forEach((slide) => {
-            slide.setAttribute('aria-selected', 'false')
-        })
-
-        slide.setAttribute('aria-selected', 'true')
-        repositionSlide(slide)
     }
 }
 
@@ -166,8 +241,18 @@ function onArrowDown () {
     presentation.downSlide()
 }
 
+function onHome() {
+    presentation.restart()
+}
+
+function onEnd() {
+    presentation.showLastSlide()
+}
+
 var keyHandlers = {
     32: onSpace,
+    35: onEnd,
+    36: onHome,
     37: onArrowLeft,
     38: onArrowUp,
     39: onArrowRight,

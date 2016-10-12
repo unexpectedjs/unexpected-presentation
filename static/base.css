@@ -26,6 +26,15 @@ aside {
     display: none;
 }
 
+article {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+
 .section {
     width: 100vw;
     font-size: 38px;
@@ -39,8 +48,151 @@ aside {
     display: none;
 }
 
+@keyframes slideInRight {
+  from {
+      transform: translate(-100vw, 0);
+      opacity: 0;
+  }
+
+  to {
+      transform: translate(0, 0);
+      opacity: 1;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+      transform: translate(0, 0);
+      opacity: 1;
+  }
+
+  to {
+      transform: translate(-100vw, 0);
+      opacity: 0;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+      transform: translate(100vw, 0);
+      opacity: 0;
+  }
+
+  to {
+      transform: translate(0, 0);
+      opacity: 1;
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+      transform: translate(0, 0);
+      opacity: 1;
+  }
+
+  to {
+      transform: translate(100vw, 0);
+      opacity: 0;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+      transform: translate(0, 100vh);
+      opacity: 0;
+  }
+
+  to {
+      transform: translate(0, 0);
+      opacity: 1;
+  }
+}
+
+@keyframes slideOutUp {
+  from {
+      transform: translate(0, 0);
+      opacity: 1;
+  }
+
+  to {
+      transform: translate(0, 100vh);
+      opacity: 0;
+  }
+}
+
+@keyframes slideInDown {
+  from {
+      transform: translate(0, -100vh);
+      opacity: 0;
+  }
+
+  to {
+      transform: translate(0, 0);
+      opacity: 1;
+  }
+}
+
+@keyframes slideOutDown {
+  from {
+      transform: translate(0, 0);
+      opacity: 1;
+  }
+
+  to {
+      transform: translate(0, -100vh);
+      opacity: 0;
+  }
+}
+.slide-out {
+    display: block;
+}
+
+.transition-right .slide-out > * {
+    animation-duration: 400ms;
+    animation-name: slideOutLeft;
+    opacity: 0;
+}
+
+.transition-left .slide-out > * {
+    animation-duration: 400ms;
+    animation-name: slideOutRight;
+    opacity: 0;
+}
+
+.transition-down .slide-out > * {
+    animation-duration: 400ms;
+    animation-name: slideOutUp;
+    opacity: 0;
+}
+
+.transition-up .slide-out > * {
+    animation-duration: 400ms;
+    animation-name: slideOutDown;
+    opacity: 0;
+}
+
 .slide[aria-selected="true"] {
     display: block;
+}
+
+.transition-right .slide[aria-selected="true"] > * {
+    animation-duration: 400ms;
+    animation-name: slideInRight;
+}
+
+.transition-left .slide[aria-selected="true"] > * {
+    animation-duration: 400ms;
+    animation-name: slideInLeft;
+}
+
+.transition-up .slide[aria-selected="true"] > * {
+    animation-duration: 400ms;
+    animation-name: slideInUp;
+}
+
+.transition-down .slide[aria-selected="true"] > * {
+    animation-duration: 400ms;
+    animation-name: slideInDown;
 }
 
 section .output,
