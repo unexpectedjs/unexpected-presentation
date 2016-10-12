@@ -19,12 +19,12 @@ var presentation = {
     }),
 
     updatePosition: function (section, slide) {
-        if (0 <= section && section < this.sections.length) {
-            this.lastPosition = {
-                section: this.position.section,
-                slide: this.position.slide
-            }
+        this.lastPosition = {
+            section: this.position.section,
+            slide: this.position.slide
+        }
 
+        if (0 <= section && section < this.sections.length) {
             this.position.section = section
             if (0 <= slide && slide < this.sections[section].length) {
                 this.position.slide = slide
@@ -150,6 +150,11 @@ var presentation = {
         }
     },
 
+    navigate: function (operation) {
+        this[operation]()
+        this.render()
+    },
+
     render: function () {
         if (
             this.lastPosition.section !== this.position.section ||
@@ -169,13 +174,18 @@ var presentation = {
                 var direction = this.getDirection(this.lastPosition, this.position)
                 document.body.className = 'transition-' + direction
 
+                // toArray(document.querySelectorAll('.slide-out')).forEach(function (slide) {
+                //     slide.classList.remove('slide-out')
+                // })
+
                 lastSlide.classList.add('slide-out')
                 setTimeout(function () {
                     lastSlide.classList.remove('slide-out')
-                }, 400);
+                }, 500);
                 lastSlide.setAttribute('aria-selected', 'false')
             }
 
+            slide.classList.remove('slide-out')
             slide.setAttribute('aria-selected', 'true')
             repositionSlide(slide)
         }
@@ -219,34 +229,34 @@ presentation.render()
 
 function onSpace (e) {
     if (e.shiftKey) {
-        presentation.prevSlide()
+        presentation.navigate('prevSlide')
     } else {
-        presentation.nextSlide()
+        presentation.navigate('nextSlide')
     }
 }
 
 function onArrowLeft () {
-    presentation.leftSlide()
+    presentation.navigate('leftSlide')
 }
 
 function onArrowUp () {
-    presentation.upSlide()
+    presentation.navigate('upSlide')
 }
 
 function onArrowRight () {
-    presentation.rightSlide()
+    presentation.navigate('rightSlide')
 }
 
 function onArrowDown () {
-    presentation.downSlide()
+    presentation.navigate('downSlide')
 }
 
 function onHome() {
-    presentation.restart()
+    presentation.navigate('restart')
 }
 
 function onEnd() {
-    presentation.showLastSlide()
+    presentation.navigate('showLastSlide')
 }
 
 var keyHandlers = {
@@ -261,8 +271,5 @@ var keyHandlers = {
 
 document.addEventListener('keydown', function (e) {
     var handler = keyHandlers[e.keyCode]
-    if (handler) {
-        handler(e)
-        presentation.render()
-    }
+    handler && handler(e)
 })

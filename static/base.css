@@ -67,7 +67,7 @@ article {
   }
 
   to {
-      transform: translate(-100vw, 0);
+      transform: translate(-50vw, 0);
       opacity: 0;
   }
 }
@@ -91,7 +91,7 @@ article {
   }
 
   to {
-      transform: translate(100vw, 0);
+      transform: translate(50vw, 0);
       opacity: 0;
   }
 }
@@ -115,7 +115,7 @@ article {
   }
 
   to {
-      transform: translate(0, 100vh);
+      transform: translate(0, 50vh);
       opacity: 0;
   }
 }
@@ -139,7 +139,7 @@ article {
   }
 
   to {
-      transform: translate(0, -100vh);
+      transform: translate(0, -50vh);
       opacity: 0;
   }
 }
@@ -148,25 +148,29 @@ article {
 }
 
 .transition-right .slide-out > * {
-    animation-duration: 400ms;
+    animation-timing-function: cubic-bezier(0.26, 0.86, 0.44, 0.985);
+    animation-duration: 500ms;
     animation-name: slideOutLeft;
     opacity: 0;
 }
 
 .transition-left .slide-out > * {
-    animation-duration: 400ms;
+    animation-timing-function: cubic-bezier(0.26, 0.86, 0.44, 0.985);
+    animation-duration: 500ms;
     animation-name: slideOutRight;
     opacity: 0;
 }
 
 .transition-down .slide-out > * {
-    animation-duration: 400ms;
+    animation-timing-function: cubic-bezier(0.26, 0.86, 0.44, 0.985);
+    animation-duration: 500ms;
     animation-name: slideOutUp;
     opacity: 0;
 }
 
 .transition-up .slide-out > * {
-    animation-duration: 400ms;
+    animation-timing-function: cubic-bezier(0.26, 0.86, 0.44, 0.985);
+    animation-duration: 500ms;
     animation-name: slideOutDown;
     opacity: 0;
 }
@@ -176,22 +180,26 @@ article {
 }
 
 .transition-right .slide[aria-selected="true"] > * {
-    animation-duration: 400ms;
+    animation-timing-function: cubic-bezier(0.26, 0.86, 0.44, 0.985);
+    animation-duration: 500ms;
     animation-name: slideInRight;
 }
 
 .transition-left .slide[aria-selected="true"] > * {
-    animation-duration: 400ms;
+    animation-timing-function: cubic-bezier(0.26, 0.86, 0.44, 0.985);
+    animation-duration: 500ms;
     animation-name: slideInLeft;
 }
 
 .transition-up .slide[aria-selected="true"] > * {
-    animation-duration: 400ms;
+    animation-timing-function: cubic-bezier(0.26, 0.86, 0.44, 0.985);
+    animation-duration: 500ms;
     animation-name: slideInUp;
 }
 
 .transition-down .slide[aria-selected="true"] > * {
-    animation-duration: 400ms;
+    animation-timing-function: cubic-bezier(0.26, 0.86, 0.44, 0.985);
+    animation-duration: 500ms;
     animation-name: slideInDown;
 }
 
