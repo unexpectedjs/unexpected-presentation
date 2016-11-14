@@ -1,9 +1,17 @@
+<!-- background: "./assets/expect-the-unexpected.jpg" -->
+
+Note: Hi, my name is Sune, I'm a software engineer at Zendesk.
+I'm here to present a JavaScript library called Unexpected, that I'm the author of.
+If you have any questions during the presentation, just ask them right away and I'll try to answer them as good as I can.
+
+===
+
 ## Unexpected
 
 #### The extensible assertion library
 
 Note: What is Unexpected? Unexpected is an assertion library like Chai, expect.js or should.js.
-But is also very different as you will see during the presentation.
+But it is also very different as you will see during the presentation.
 
 ---
 
