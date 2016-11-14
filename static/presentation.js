@@ -92,7 +92,15 @@ var presentation = {
                 this.position.slide - 1
             )
         } else {
-            this.prevSection()
+            if (this.position.section > 0) {
+                var prevSectionIndex = this.position.section - 1
+
+                this.updatePosition(
+                    prevSectionIndex,
+                    this.sections[prevSectionIndex].length - 1
+                )
+            }
+
         }
     },
 
@@ -155,7 +163,7 @@ var presentation = {
         this.render()
     },
 
-    render: function () {
+    render: function (rerender) {
         if (
             this.lastPosition.section !== this.position.section ||
             this.lastPosition.slide !== this.position.slide
@@ -170,7 +178,7 @@ var presentation = {
             }
 
 
-            if (lastSlide) {
+            if (!rerender && lastSlide) {
                 var direction = this.getDirection(this.lastPosition, this.position)
                 document.body.className = 'transition-' + direction
 
@@ -218,7 +226,7 @@ function repositionSlide(slide) {
 }
 
 window.onresize = function () {
-    presentation.render()
+    presentation.render(true)
 }
 
 window.onpopstate = function(event) {
