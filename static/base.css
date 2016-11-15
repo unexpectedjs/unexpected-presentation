@@ -35,6 +35,25 @@ article {
     overflow: hidden;
 }
 
+.background {
+    position: fixed;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: opacity 400ms ease-in-out;
+    opacity: 0;
+}
+
+.background.visible {
+    opacity: 1;
+    transition: opacity 400ms ease-in-out;
+}
+
 .section {
     width: 100vw;
     font-size: 38px;

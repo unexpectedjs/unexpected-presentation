@@ -73,7 +73,7 @@ module.exports = {
                             section.split(/<!-- slide -->/gm).map(function (slide, j) {
                                 var backgroundAttribute = ''
 
-                                slide = slide.replace(/<!-- background: "(.*?)" -->/, function ($0, $1) {
+                                slide = slide.replace(/<!-- background: "(.*?)" -->/g, function ($0, $1) {
                                     backgroundAttribute = ' data-background="' + $1 + '"'
                                     return ''
                                 })

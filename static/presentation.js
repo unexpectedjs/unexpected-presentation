@@ -2,7 +2,21 @@ function toArray (items) {
     return Array.prototype.slice.call(items)
 }
 
+var container = document.querySelector('article')
 var slides = toArray(document.querySelectorAll('.slide'))
+
+var backgrounds = {}
+slides.filter(function (slide) {
+    return slide.hasAttribute('data-background')
+}).forEach(function (slide) {
+    var backgroundElement = document.createElement('div')
+    var background = slide.getAttribute('data-background')
+
+    backgroundElement.classList.add('background')
+    backgroundElement.style.backgroundImage = 'url("' + background + '")'
+    document.body.appendChild(backgroundElement)
+    backgrounds[slide.id] = backgroundElement
+})
 
 var sections = toArray(document.querySelectorAll('.section'))
 
@@ -177,14 +191,17 @@ var presentation = {
                 history.pushState(slide.id, slide.id, hash)
             }
 
+            if (!rerender && slide.id in backgrounds) {
+                backgrounds[slide.id].classList.add('visible')
+            }
 
             if (!rerender && lastSlide) {
                 var direction = this.getDirection(this.lastPosition, this.position)
                 document.body.className = 'transition-' + direction
 
-                // toArray(document.querySelectorAll('.slide-out')).forEach(function (slide) {
-                //     slide.classList.remove('slide-out')
-                // })
+                if (lastSlide.id in backgrounds) {
+                    backgrounds[lastSlide.id].classList.remove('visible')
+                }
 
                 lastSlide.classList.add('slide-out')
                 setTimeout(function () {

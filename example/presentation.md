@@ -1,4 +1,4 @@
-<!-- background: "./assets/expect-the-unexpected.jpg" -->
+<!-- background: "./assets/expect-the-unexpected.svg" -->
 
 Note: Hi, my name is Sune, I'm a software engineer at Zendesk.
 I'm here to present a JavaScript library called Unexpected, that I'm the author of.
