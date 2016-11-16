@@ -24,8 +24,8 @@ var presentation = {
     lastPosition: { section: -1, slide: -1 },
 
     position: {
-        section: 0,
-        slide: 0
+        section: -1,
+        slide: -1
     },
 
     sections: sections.map(function (section) {
@@ -174,6 +174,14 @@ var presentation = {
 
     navigate: function (operation) {
         this[operation]()
+
+        var slide = this.getCurrentSlide()
+
+        var hash = '#' + slide.id
+        if (hash !== location.hash) {
+            history.pushState(slide.id, slide.id, hash)
+        }
+
         this.render()
     },
 
@@ -182,14 +190,8 @@ var presentation = {
             this.lastPosition.section !== this.position.section ||
             this.lastPosition.slide !== this.position.slide
         ) {
-            console.log(this.lastPosition, this.position);
             var slide = this.getCurrentSlide()
             var lastSlide = this.getLastSlide()
-
-            var hash = '#' + slide.id
-            if (hash !== location.hash) {
-                history.pushState(slide.id, slide.id, hash)
-            }
 
             if (!rerender && slide.id in backgrounds) {
                 backgrounds[slide.id].classList.add('visible')
@@ -246,11 +248,26 @@ window.onresize = function () {
     presentation.render(true)
 }
 
-window.onpopstate = function(event) {
+function gotoCurrentHash () {
+    var section = 0
+    var slide = 0
+    if (location.hash) {
+        var m = location.hash.match(/#slide-(\d+)-(\d+)/)
+        section = parseInt(m[1], 10),
+        slide = parseInt(m[2], 10)
+    }
+
+    presentation.updatePosition(section, slide)
+    console.log(presentation.position, presentation.lastPosition)
+
     presentation.render()
+}
+
+window.onpopstate = function(event) {
+    gotoCurrentHash()
 };
 
-presentation.render()
+gotoCurrentHash()
 
 function onSpace (e) {
     if (e.shiftKey) {
@@ -295,6 +312,8 @@ var keyHandlers = {
 }
 
 document.addEventListener('keydown', function (e) {
-    var handler = keyHandlers[e.keyCode]
-    handler && handler(e)
+    if (!e.metaKey && !e.ctrlKey) {
+        var handler = keyHandlers[e.keyCode]
+        handler && handler(e)
+    }
 })
