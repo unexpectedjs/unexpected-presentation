@@ -4,7 +4,7 @@
   "dependencies": {
     "moment": "2.16.0",
     "sinon": "1.17.6",
-    "unexpected-presentation": "file:///Users/sunesimonsen/Code/unexpected-presentation",
+    "unexpected-presentation": "..",
     "unexpected-sinon": "10.5.0"
   }
 }
