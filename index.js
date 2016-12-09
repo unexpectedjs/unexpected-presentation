@@ -1,3 +1,4 @@
+/*global unexpected*/
 var html = require("html");
 var path = require('path')
 var fs = require('fs')
@@ -8,10 +9,28 @@ var UnexpectedMarkdown = require('unexpected-markdown')
 
 var noteRegex = /Note:([^]*?)\n\n/mg;
 
+function createExpect(options) {
+    if (typeof unexpected !== 'undefined') {
+        return unexpected.clone();
+    }
+
+    return require('unexpected').clone();
+}
+
 module.exports = {
-    build: function (presentation) {
+    build: function (options) {
+        var presentation = options.presentation
         var directory = path.dirname(presentation)
         var destination = path.join(directory, 'build')
+
+        if (options.require) {
+            var moduleName = options.require;
+            if (/^[\.\/]/.test(moduleName)) {
+                moduleName = path.resolve(process.cwd(), moduleName);
+            }
+            require(moduleName);
+        }
+
 
         async.waterfall([
             function (cb) {
@@ -61,7 +80,7 @@ module.exports = {
             },
             function (content, cb) {
                 new UnexpectedMarkdown(content).toHtml({
-                    expect: require('unexpected')
+                    expect: createExpect(options)
                 }, cb);
             },
             function (content, cb) {
