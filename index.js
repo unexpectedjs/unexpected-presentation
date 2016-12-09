@@ -128,7 +128,7 @@ module.exports = {
                 )
             },
             function (content, cb) {
-                fs.writeFile(path.join(destination, path.basename(presentation, '.md')) + '.html', content, cb)
+                fs.writeFile(path.join(destination, 'index.html'), content, cb)
             }
         ], function (err, result) {
             if (err) {
