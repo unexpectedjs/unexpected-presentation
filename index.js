@@ -129,6 +129,9 @@ module.exports = {
             },
             function (content, cb) {
                 fs.writeFile(path.join(destination, 'index.html'), content, cb)
+            },
+            function (cb) {
+                fs.writeFile(path.join(destination, '.nojekyll'), '', cb)
             }
         ], function (err, result) {
             if (err) {
