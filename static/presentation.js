@@ -113,8 +113,12 @@ var presentation = {
                     prevSectionIndex,
                     this.sections[prevSectionIndex].length - 1
                 )
+            } else {
+                this.updatePosition(
+                    this.position.section,
+                    this.position.slide
+                )
             }
-
         }
     },
 
