@@ -1,5 +1,4 @@
 /*global unexpected*/
-var html = require("html");
 var path = require('path')
 var fs = require('fs')
 var async = require('async')
