@@ -62,7 +62,7 @@ article {
 .slide {
     box-sizing: border-box;
     padding: 40px;
-    width: 1000px;
+    width: 1024px;
     position: absolute;
     display: none;
 }
