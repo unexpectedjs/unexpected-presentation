@@ -73,7 +73,7 @@ module.exports = {
                 cb(
                     null,
                     content.replace(noteRegex, function ($0, $1) {
-                        return '<aside class="notes">' + $1.trim() + '</aside>\n\n\n';
+                        return '<!-- note start -->\n' + $1.trim() + '\n<!-- note end -->\n\n\n';
                     })
                 );
             },
@@ -81,6 +81,14 @@ module.exports = {
                 new UnexpectedMarkdown(content).toHtml({
                     expect: createExpect(options)
                 }, cb);
+            },
+            function (content, cb) {
+                cb(
+                    null,
+                    content
+                        .replace(/<!-- note start -->/g, '<aside class="notes">')
+                        .replace(/<!-- note end -->/g, '</aside>')
+                )
             },
             function (content, cb) {
                 cb(
