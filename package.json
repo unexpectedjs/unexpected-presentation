@@ -1,6 +1,6 @@
 {
   "name": "unexpected-presentation",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "description": "Create HTML presentation using unexpected-markdown",
   "main": "index.js",
   "keywords": [
