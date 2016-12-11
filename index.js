@@ -55,6 +55,7 @@ module.exports = {
                 ncp(
                     path.join(__dirname, 'static'),
                     path.join(destination, 'static'),
+                    { dereference: true },
                     cb
                 );
             },
@@ -130,6 +131,7 @@ module.exports = {
                     '<article>' +
                     content +
                     '</article>' +
+                    '<script src="./static/vanilla-touchwipe.js"></script>' +
                     '<script src="./static/presentation.js"></script>' +
                     '</body>' +
                     '</html>'
