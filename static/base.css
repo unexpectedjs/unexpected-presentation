@@ -305,3 +305,35 @@ section .code + .output {
     bottom: 25px;
     right: -5px;
 }
+
+table {
+    margin: auto;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+table th {
+    font-weight: bold;
+}
+
+table th,
+table td {
+    text-align: left;
+    padding: 0.2em 0.5em 0.2em 0.5em;
+    border-bottom: 1px solid;
+}
+
+table th[align="center"],
+table td[align="center"] {
+    text-align: center;
+}
+
+table th[align="right"],
+table td[align="right"] {
+    text-align: right;
+}
+
+table tbody tr:last-child th,
+table tbody tr:last-child td {
+    border-bottom: none;
+}
